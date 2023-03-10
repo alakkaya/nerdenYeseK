@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "username area is required"],
         lowercase: true,
-        validate: [validator.isAlphanumeric, "Only Alphanumeric Characters"]
+        validate: [validator.isAlphanumeric, "Only Alphanumeric Characters"],
+        unique: true
     },
     name: {
         type: String,

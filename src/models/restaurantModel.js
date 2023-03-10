@@ -46,7 +46,13 @@ const restaurantSchema = new mongoose.Schema({
     phoneNumber: {
         type: String,
         required: true,
+        unique: true,
         match: /^\+?[1-9]\d{1,14}$/   //+090eer
+    },
+    category: {
+        type: [String],
+        enum: ["Pizza", "Kebap", "Lahmacun", "Çiğ Köfte", "Tatlı", "Hamburger", "Sushi"],
+        required: true
     },
     workingDays: [workingDaysSchema],
     wifi: {

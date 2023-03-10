@@ -4,6 +4,7 @@ import dbConnection from './src/config/databaseConnection.js';
 import cookieParser from 'cookie-parser';
 
 import userRoute from "./src/routers/userRoute.js"
+import restaurantRoute from "./src/routers/restaurantRoute.js"
 import { checkUser } from './src/middlewares/authMiddleware.js';
 
 
@@ -26,6 +27,7 @@ app.use(cookieParser())
 //routes
 app.use("*", checkUser)
 app.use("/users", userRoute)
+app.use("/restaurants", restaurantRoute)
 
 
 
