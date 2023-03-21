@@ -1,53 +1,74 @@
-import User from "../models/userModel.js";
 import jwt from "jsonwebtoken"
 
 
-const checkUser = async (req, res, next) => {
-    const token = req.cookies.jwt
-    if (token) {
-        jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
-            if (err) {
-                console.log(err.message);
-                res.locals.user = null
-                next()
-            } else {
-                const user = await User.findById(decodedToken.userId)
-                res.locals.user = user
-                next()
-            }
-        })
-    } else {
-        res.locals.user = null
-        next()
-    }
-}
-
+//verify Token
 const authenticateToken = async (req, res, next) => {
-    try {
-        const token = req.cookies.jwt
 
-        if (token) {
-            jwt.verify(token, process.env.JWT_SECRET, (err) => {
-                if (err) {
-                    console.log(err.message);
-                    next()// res.redirect("/login")
-                } else {
-                    next()
-                }
-            })
-        } else {
-            next()// res.redirect("/login")
-        }
-
-    } catch (error) {
-        return res.status(401).json({
+    const token = req.cookies.jwt
+    if (!token) {
+        res.status(401).json({
             success: false,
-            error: "Not authorized"
+            message: "Not authorized"
         })
     }
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        if (err) {
+            res.status(401).json({
+                success: false,
+                message: "Token geçersiz"
+            })
+        }
+        req.user = user;
+        next();
+    })
 }
+
+
+const checkUser = async (req, res, next) => {
+    authenticateToken(req, res, () => {
+        if (req.user.id == req.params.id || req.user.isAdmin) {
+            next()
+        } else {
+            res.status(401).json({
+                success: false,
+                error: "Not authorized"
+            })
+        }
+    })
+}
+
+
+const verifyAdmin = async (req, res, next) => {
+    authenticateToken(req, res, next, () => {
+        if (req.user.isAdmin) {
+            next()
+        } else {
+            return res.status(401).json({
+                success: false,
+                error: "You are not admin"
+            })
+        }
+    })
+}
+
+const checkUserOrAdmin = async (req, res, next) => {
+    authenticateToken(req, res, next, () => {
+        if (req.user.id === req.params.id || req.user.isAdmin) {
+            next()
+        } else {
+            res.status(401).json({
+                success: false,
+                error: "Not authorized"
+            })
+        }
+    })
+}
+
+
 
 export {
     authenticateToken,
-    checkUser
+    checkUser,
+    verifyAdmin,
+    checkUserOrAdmin
 }

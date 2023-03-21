@@ -14,16 +14,19 @@ router
     .post(userController.loginUser)
 
 router
+    .route("/logout")
+    .get(authMiddleware.verifyAdmin, userController.logout)
+
+router
     .route("/")
-    .get(authMiddleware.authenticateToken, userController.getAllUsers)
-    .put(authMiddleware.authenticateToken, userController.updateUser)
+    .get(authMiddleware.verifyAdmin, userController.getAllUsers)
 
 
 router
     .route("/:id")
-    .get(authMiddleware.authenticateToken, userController.getAUser)
-    .delete(authMiddleware.authenticateToken, userController.deleteUser)
-    .put(authMiddleware.authenticateToken, userController.updateUser)
+    .get(authMiddleware.checkUserOrAdmin, userController.getAUser)
+    .delete(authMiddleware.checkUser, userController.deleteUser)
+    .put(authMiddleware.checkUser, userController.updateUser)
 
 
 

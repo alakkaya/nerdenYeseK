@@ -32,6 +32,9 @@ const userSchema = new mongoose.Schema({
         required: [true, "Password area is required"],
         minlength: [6, "At least 6 characters"]
     },
+    image: {
+        type: String
+    },
     livingCity: {
         type: String,
         required: true
@@ -46,12 +49,15 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     hobbies: {
-        type: String,
-        max: 150
+        type: [String],
+
     },
     favoriteFood: {
-        type: String,
-        max: 50
+        type: [String],
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true })
 
@@ -63,6 +69,8 @@ userSchema.pre("save", function (next) {
     })
 })
 
+
+//değişiklikler yapınca bunları logda tutmak gerek....
 
 const User = mongoose.model("User", userSchema)
 

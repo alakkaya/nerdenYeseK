@@ -1,25 +1,25 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import { checkUser } from "../middlewares/authMiddleware.js";
 
 
 const createUser = async (req, res) => {
+    const { email } = req.body
     try {
-        const user = await User.create(req.body)
-        res.status(201).json({ user: user._id, user })
+        const user = await User.findOne({ email })
+        if (user) {
+            return res.status(409).json({ success: false, message: "The email is already registered" })
+        }
+
+        const newUser = await User.create(req.body)
+        return res.status(201).json({ success: true, message: "User created...", newUser })
+
     } catch (error) {
-        let errors2 = []
-
-        if (error.code === 11000) {
-            errors2.email = "The email is already registered"
-        }
-
-        if (error.name === "ValidationError") {
-            Object.keys(error.errors).forEach((key) => {
-                errors2[key] = error.errors[key].message
-            })
-        }
-        return res.status(400).json(errors2)
+        return res.status(500).json({
+            success: false,
+            error,
+        })
     }
 }
 
@@ -74,15 +74,15 @@ const loginUser = async (req, res) => {
 // }
 
 
-const createToken = (userId) => {
-    return jwt.sign({ userId }, process.env.JWT_SECRET, {
+const createToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: "1d"
     })
 }
 
 const getAllUsers = async (req, res) => {
     try {
-        const users = await User.find({ _id: { $ne: res.locals.user._id } })
+        const users = await User.find({ _id: { $ne: req.user.id } })
         res.status(200).json({ success: true, users })
         //render("users", {
         //    users,
@@ -115,8 +115,7 @@ const getAUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     try {
-        if (req.params.id === res.locals.user.id) {
-
+        if (req.params.id === req.user.id) {
             const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true })
 
             return res.status(200).json({
@@ -130,6 +129,7 @@ const updateUser = async (req, res) => {
                 message: "User don't have permission to update other user accounts"
             })
         }
+
     } catch (error) {
         return res.status(500).json({
             success: false,
@@ -140,9 +140,9 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     try {
-        if (req.params.id === res.locals.user.id) {
+        if (req.params.id === req.user.id) {
 
-            const deletedUser = await User.findByIdAndRemove(req.params.id)
+            const deletedUser = await User.findByIdAndDelete(req.params.id)
 
             return res.status(200).json({
                 success: true,
@@ -164,7 +164,15 @@ const deleteUser = async (req, res) => {
     }
 }
 
+const logout = async (req, res) => {
+    //Instead of the destroy session I'll clear JWT from client-side
 
+    res.clearCookie("jwt");
+    return res.status(200).json({
+        success: true,
+        message: "Succesfully logged out."
+    })
+}
 
 export {
     createUser,
@@ -172,5 +180,6 @@ export {
     getAllUsers,
     getAUser,
     deleteUser,
-    updateUser
+    updateUser,
+    logout
 }

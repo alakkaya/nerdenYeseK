@@ -34,27 +34,54 @@ const workingDaysSchema = new mongoose.Schema({
 
 
 const restaurantSchema = new mongoose.Schema({
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    menu: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Menu",
+        required: true,
+    },
     city: {
         type: String,
-        required: true
+        required: true //filtreyi buradan yararlanarak yaparız.
     },
     name: {
         type: String,
         required: true,
+        unique: true,
         trim: true
     },
     phoneNumber: {
         type: String,
         required: true,
         unique: true,
-        match: /^\+?[1-9]\d{1,14}$/   //+090eer
+        match: /^\+?[1-9]\d{1,14}$/   //+0903380336159
     },
     category: {
+        type: [String], //birden fazla olursa
+        enum: ["Pizza", "Kebap", "Lahmacun", "ÇiğKöfte", "Tatlı", "Hamburger", "Sushi"],
+        required: true
+    },
+    photos: {
         type: [String],
-        enum: ["Pizza", "Kebap", "Lahmacun", "Çiğ Köfte", "Tatlı", "Hamburger", "Sushi"],
+    },
+    address: {
+        type: String,
         required: true
     },
     workingDays: [workingDaysSchema],
+    rating: {
+        type: Number,
+        min: 0,
+        max: 5
+    },
+    averagePrice: {
+        type: Number,
+        required: true
+    },
     wifi: {
         type: Boolean,
         required: true
@@ -95,3 +122,6 @@ const restaurantSchema = new mongoose.Schema({
 const Restaurant = mongoose.model("Restaurant", restaurantSchema)
 
 export default Restaurant;
+
+
+

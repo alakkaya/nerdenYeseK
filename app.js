@@ -5,7 +5,8 @@ import cookieParser from 'cookie-parser';
 
 import userRoute from "./src/routers/userRoute.js"
 import restaurantRoute from "./src/routers/restaurantRoute.js"
-import { checkUser } from './src/middlewares/authMiddleware.js';
+import menuRoute from "./src/routers/menuRoute.js"
+
 
 
 
@@ -25,10 +26,9 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 //routes
-app.use("*", checkUser)
 app.use("/users", userRoute)
 app.use("/restaurants", restaurantRoute)
-
+app.use("/menus", menuRoute)
 
 
 app.listen(port, () => {
