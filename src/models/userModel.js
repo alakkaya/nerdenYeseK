@@ -70,7 +70,6 @@ userSchema.pre("save", function (next) {
 })
 
 
-//değişiklikler yapınca bunları logda tutmak gerek....
 
 const User = mongoose.model("User", userSchema)
 

@@ -30,6 +30,4 @@ explaining->Each room object has two properties: number and unavailableDates.
 */
 
 
-//foto text star etkileşim((yorum bepenme )), date , fotolara true false ekle...
 
-//
