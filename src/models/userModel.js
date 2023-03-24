@@ -11,6 +11,10 @@ const userSchema = new mongoose.Schema({
         validate: [validator.isAlphanumeric, "Only Alphanumeric Characters"],
         unique: true
     },
+    comments: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+    },
     name: {
         type: String,
         required: true,

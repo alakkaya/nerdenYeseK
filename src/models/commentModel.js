@@ -13,9 +13,15 @@ const replySchema = new mongoose.Schema({
 });
 
 const commentSchema = new mongoose.Schema({
-    user: {
-        type: Schema.Types.ObjectId,
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
+        required: true,
+    },
+    restaurant: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Restaurant",
+        required: true,
     },
     text: {
         type: String,
@@ -36,14 +42,14 @@ const commentSchema = new mongoose.Schema({
         min: 0,
         max: 5
     },
-    likes: {
-        type: Number,
-        default: 0
-    },
-    dislikes: {
-        type: Number,
-        default: 0
-    },
+    likes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }],
+    dislikes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }],
     replies: [replySchema]
 
 }, { timestamps: true })

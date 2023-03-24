@@ -93,7 +93,7 @@ const deleteMenu = async (req, res, next) => {
             { $pull: { menu: menuId } }
         );
 
-        res.status(200).json({ success: true, message: "Succesfully deleted." });
+        res.status(200).json({ success: true, message: "The menu deleted succesfully." });
     } catch (error) {
         return res.status(500).json({ success: false, error });
     }
