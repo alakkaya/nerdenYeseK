@@ -8,6 +8,10 @@ router
     .post(authMiddleware.verifyAdmin, commentController.createComment)
 
 router
+    .route("/replyComment/:commentId/")
+    .post(authMiddleware.verifyAdmin, commentController.replyComment)
+
+router
     .route("/updateComment/:id/")
     .put(authMiddleware.verifyAdmin, commentController.updateComment)
 
@@ -22,6 +26,10 @@ router
 router
     .route("/:id")
     .get(authMiddleware.verifyAdmin, commentController.getDetailComment)
+
+router
+    .route("/getCommentsWithImage/:restaurantId")
+    .get(authMiddleware.verifyAdmin, commentController.getCommentsWithImage)
 
 router
     .route("/:id/like")

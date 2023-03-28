@@ -39,14 +39,13 @@ const restaurantSchema = new mongoose.Schema({
         ref: "User",
         required: true,
     },
-    comments: {
+    comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment",
-    },
+    }],
     menu: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Menu",
-        required: true,
     },
     city: {
         type: String,

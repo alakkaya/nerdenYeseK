@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Comment from "../models/commentModel.js";
 import Restaurant from "../models/restaurantModel.js";
 import User from "../models/userModel.js"
@@ -33,7 +34,7 @@ const createComment = async (req, res) => {
 
         await Restaurant.findByIdAndUpdate(
             restaurantId,
-            { $push: { comment: comment._id } },
+            { $push: { comments: comment._id } },
             { new: true }
         );
 
@@ -129,6 +130,25 @@ const getAllComment = async (req, res) => {
     }
 }
 
+const getCommentsWithImage = async (req, res) => {
+    const restaurantId = req.params.restaurantId;
+    const restaurantObjectId = mongoose.Types.ObjectId(restaurantId);
+    try {
+        const comments = await Comment.find({
+            restaurant: restaurantObjectId,
+            imageUrl: { $ne: null },
+        });
+        if (comments.length === 0) {
+            return res.status(200).json({ success: true, message: "No comments found" });
+        }
+        res.status(200).json({ success: true, comments });
+    } catch (error) {
+        return res.status(500).json({ success: false, error });
+    }
+};
+
+
+
 const likeComment = async (req, res) => {
     const userId = req.user.id;
 
@@ -215,9 +235,37 @@ const dislikeComment = async (req, res) => {
     }
 };
 
+const replyComment = async (req, res) => {
+    const commentId = req.params.commentId
+    const userId = req.user.id;
+    const text = req.body.text;
+
+    try {
+        const comment = await Comment.findOne({ _id: commentId })
+
+        if (!comment) {
+            res.status(404).json({ success: false, message: "Comment not found" })
+        }
+
+        const reply = {
+            text,
+            repliedBy: userId
+        }
+
+        comment.replies.push(reply);
+        await comment.save();
+
+        res.status(201).json({ success: true, data: reply })
+
+    } catch (error) {
+        return res.status(500).json({ success: false, error })
+    }
+}
 
 
-//likes,replies
+
+
+//replies
 
 
 
@@ -227,6 +275,8 @@ export {
     deleteComment,
     getDetailComment,
     getAllComment,
+    getCommentsWithImage,
     likeComment,
-    dislikeComment
+    dislikeComment,
+    replyComment
 };
