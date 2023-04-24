@@ -4,7 +4,8 @@ import Restaurant from "../models/restaurantModel.js";
 import User from "../models/userModel.js"
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs"
-
+// sadce oluşturan k.şiş dılında admnler reestgüncellesin.
+// siye yöneci ve rest sahibi içn ayrı ayrı  kaç kişi ziyaret topla kullanıcı ,,, son 30 gün istatistikler ,,, şifre resetleme endpointi falan oluştur.
 const createComment = async (req, res) => {
     const restaurantId = req.params.restaurantId
     const userId = req.user.id;
