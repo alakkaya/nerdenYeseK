@@ -51,7 +51,7 @@ const verifyAdmin = async (req, res, next) => {
     })
 }
 
-const checkUserOrAdmin = async (req, res, next) => {
+const verifyUserOrAdmin = async (req, res, next) => {
     authenticateToken(req, res, next, () => {
         if (req.user.id === req.params.id || req.user.isAdmin) {
             next()
@@ -70,5 +70,5 @@ export {
     authenticateToken,
     checkUser,
     verifyAdmin,
-    checkUserOrAdmin
+    verifyUserOrAdmin
 }

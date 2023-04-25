@@ -13,11 +13,11 @@ router
 
 router
     .route("/updateComment/:id/")
-    .put(authMiddleware.verifyAdmin, commentController.updateComment)
+    .put(authMiddleware.checkUser, commentController.updateComment)
 
 router
     .route("/deleteComment/:id/:restaurantId")
-    .delete(authMiddleware.verifyAdmin, commentController.deleteComment)
+    .delete(authMiddleware.verifyUserOrAdmin, commentController.deleteComment)
 
 router
     .route("/")
@@ -29,14 +29,14 @@ router
 
 router
     .route("/getCommentsWithImage/:restaurantId")
-    .get(authMiddleware.verifyAdmin, commentController.getCommentsWithImage)
+    .get(authMiddleware.verifyUserOrAdmin, commentController.getCommentsWithImage)
 
 router
     .route("/:id/like")
-    .put(authMiddleware.verifyAdmin, commentController.likeComment)
+    .put(authMiddleware.checkUser, commentController.likeComment)
 router
     .route("/:id/dislike")
-    .put(authMiddleware.verifyAdmin, commentController.dislikeComment)
+    .put(authMiddleware.checkUser, commentController.dislikeComment)
 
 
 export default router;
