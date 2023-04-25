@@ -41,16 +41,16 @@ const userSchema = new mongoose.Schema({
     },
     livingCity: {
         type: String,
-        required: true
+        // required: true
     },
     phoneNumber: {
         type: String,
-        required: true,
+        // required: true,
         match: /^\+?[1-9]\d{1,14}$/   //+090eer
     },
     birthDate: {
         type: Date,
-        required: true
+        // required: true
     },
     hobbies: {
         type: [String],
