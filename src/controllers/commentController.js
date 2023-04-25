@@ -132,7 +132,7 @@ const getAllComment = async (req, res) => {
 }
 const getCommentsForRestaurant = async (req, res) => {
     try {
-        const comment = await Comment.find({})
+        const comment = await Comment.find({ restaurant: req.params.restaurantId })
 
         res.status(200).json({ success: true, comment })
     } catch (error) {

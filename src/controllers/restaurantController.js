@@ -76,8 +76,9 @@ const updateRestaurant = async (req, res) => {
         if (restaurant.createdBy.toString() !== req.user.id) {
             return res.status(403).json({
                 success: false,
-                message: "You are not authorized to delete this restaurant"
+                message: "You are not authorized to update this restaurant"
             })
+
         }
         const updatedRestaurant = await Restaurant.findOneAndUpdate({ _id: restaurantId }, { $set: req.body }, { new: true })
         return res.status(200).json({

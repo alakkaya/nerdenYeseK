@@ -22,7 +22,7 @@ router
 
 router
     .route("/:restaurantId")
-    .get(authMiddleware.checkUser, commentController.getCommentsForRestaurant)
+    .get(commentController.getCommentsForRestaurant)
 
 
 router
