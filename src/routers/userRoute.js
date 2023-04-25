@@ -24,7 +24,7 @@ router
 
 router
     .route("/:id")
-    .get(authMiddleware.checkUserOrAdmin, userController.getAUser)
+    .get(authMiddleware.verifyUserOrAdmin, userController.getAUser)
     .delete(authMiddleware.checkUser, userController.deleteUser)
     .put(authMiddleware.checkUser, userController.updateUser)
 

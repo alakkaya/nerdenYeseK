@@ -3,7 +3,6 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import dbConnection from './src/config/databaseConnection.js';
 import cookieParser from 'cookie-parser';
-import cors from 'cors'
 
 import userRoute from "./src/routers/userRoute.js"
 import restaurantRoute from "./src/routers/restaurantRoute.js"
