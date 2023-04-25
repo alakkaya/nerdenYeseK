@@ -18,7 +18,7 @@ router
     .delete(authMiddleware.verifyAdmin, menuController.deleteMenu)
 
 router
-    .route("/getAllMenus")
+    .route("/")
     .get(menuController.getAllMenu)
 
 router

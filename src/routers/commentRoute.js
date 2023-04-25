@@ -7,9 +7,6 @@ router
     .route("/createComment/:restaurantId")
     .post(authMiddleware.checkUser, commentController.createComment)
 
-router
-    .route("/replyComment/:commentId/")
-    .post(authMiddleware.checkUser, commentController.replyComment)
 
 router
     .route("/updateComment/:id/")
@@ -20,8 +17,13 @@ router
     .delete(authMiddleware.verifyUserOrAdmin, commentController.deleteComment)
 
 router
-    .route("/getAllComments")
+    .route("/")
     .get(authMiddleware.verifyAdmin, commentController.getAllComment)
+
+router
+    .route("/:restaurantId")
+    .get(authMiddleware.checkUser, commentController.getCommentsForRestaurant)
+
 
 router
     .route("/:id")

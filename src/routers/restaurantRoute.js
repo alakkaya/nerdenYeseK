@@ -11,7 +11,7 @@ router
     .post(authMiddleware.verifyAdmin, restaurantController.createRestaurant)
 
 router
-    .route("/getAllRestaurants")
+    .route("/")
     .get(restaurantController.getAllRestaurants)
 
 router

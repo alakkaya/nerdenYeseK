@@ -1,21 +1,6 @@
 //foto text star etkileşim((yorum bepenme )), date , fotolara true false ekle...
 import mongoose from "mongoose";
 
-const replySchema = new mongoose.Schema({
-    repliedBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-    },
-    text: {
-        type: String,
-        required: true
-    },
-    repliedAt: {
-        type: Date,
-        default: Date.now
-    }
-});
 
 const commentSchema = new mongoose.Schema({
     createdBy: {
@@ -55,7 +40,7 @@ const commentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }],
-    replies: [replySchema]
+
 
 }, { timestamps: true })
 
