@@ -18,7 +18,7 @@ router
     .get(authMiddleware.verifyAdmin, userController.logout)
 
 router
-    .route("/")
+    .route("/getAllUsers")
     .get(authMiddleware.verifyAdmin, userController.getAllUsers)
 
 
