@@ -1,7 +1,10 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-import { checkUser } from "../middlewares/authMiddleware.js";
+import FormData from 'form-data';
+import Mailgun from 'mailgun.js';
+
+
 
 
 const createUser = async (req, res) => {
@@ -174,6 +177,11 @@ const logout = async (req, res) => {
     })
 }
 
+const resetPassword = async (req, res) => {
+    const formData = new FormData();
+    const mailgun = new Mailgun(formData);
+    const mg = mailgun.client({ username: 'api', key: process.env.MAILGUN_API_KEY || 'key-yourkeyhere' });
+}
 export {
     createUser,
     loginUser,
@@ -181,5 +189,6 @@ export {
     getAUser,
     deleteUser,
     updateUser,
-    logout
+    logout,
+    resetPassword
 }
