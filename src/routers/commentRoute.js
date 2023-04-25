@@ -20,7 +20,7 @@ router
     .delete(authMiddleware.verifyUserOrAdmin, commentController.deleteComment)
 
 router
-    .route("/")
+    .route("/getAllComments")
     .get(authMiddleware.verifyAdmin, commentController.getAllComment)
 
 router
