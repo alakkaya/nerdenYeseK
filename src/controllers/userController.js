@@ -5,8 +5,6 @@ import FormData from 'form-data';
 import Mailgun from 'mailgun.js';
 
 
-
-
 const createUser = async (req, res) => {
     const { email } = req.body
     try {

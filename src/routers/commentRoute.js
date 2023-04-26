@@ -6,8 +6,6 @@ const router = express.Router();
 router
     .route("/createComment/:restaurantId")
     .post(authMiddleware.checkUser, commentController.createComment)
-
-
 router
     .route("/updateComment/:id/")
     .put(authMiddleware.checkUser, commentController.updateComment)
@@ -15,16 +13,12 @@ router
 router
     .route("/deleteComment/:id/:restaurantId")
     .delete(authMiddleware.verifyUserOrAdmin, commentController.deleteComment)
-
 router
     .route("/")
     .get(authMiddleware.verifyAdmin, commentController.getAllComment)
-
 router
     .route("/:restaurantId")
     .get(commentController.getCommentsForRestaurant)
-
-
 router
     .route("/:id")
     .get(authMiddleware.verifyAdmin, commentController.getDetailComment)
@@ -39,6 +33,5 @@ router
 router
     .route("/:id/dislike")
     .put(authMiddleware.checkUser, commentController.dislikeComment)
-
-
+    
 export default router;

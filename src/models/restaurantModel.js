@@ -4,11 +4,11 @@ const workingDaysSchema = new mongoose.Schema({
     day: {
         type: String,
         enum: ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"],
-        required: true
+        // required: true
     },
     isOpen: {
         type: Boolean,
-        required: true
+        // required: true
     },
     openTime: {
         type: String,
@@ -37,7 +37,7 @@ const restaurantSchema = new mongoose.Schema({
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true,
+        // required: true,
     },
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -83,39 +83,39 @@ const restaurantSchema = new mongoose.Schema({
     },
     averagePrice: {
         type: Number,
-        required: true
+        // required: true
     },
     wifi: {
         type: Boolean,
-        required: true
+        // required: true
     },
     wc: {
         type: Boolean,
-        required: true
+        // required: true
     },
     takeaway: {
         type: Boolean,
-        required: true
+        // required: true
     },
     reservation: {
         type: Boolean,
-        required: true
+        // required: true
     },
     serviceToCar: {
         type: Boolean,
-        required: true
+        // required: true
     },
     creditCard: {
         type: Boolean,
-        required: true
+        // required: true
     },
     forGroups: {
         type: Boolean,
-        required: true
+        // required: true
     },
     liveMusic: {
         type: Boolean,
-        required: true
+        // required: true
     }
 
 
