@@ -24,9 +24,9 @@ const createRestaurant = async (req, res) => {
 
 
 const getAllRestaurants = async (req, res) => {
-    const { min, max, ...others } = req.query;
+
     try {
-        const restaurants = await Restaurant.find({ ...others, averagePrice: { $gt: min | 1, $lt: max | 999 } }).limit(req.query.limit);
+        const restaurants = await Restaurant.find({});
         if (restaurants) {
             return res.status(200).json({
                 success: true,
