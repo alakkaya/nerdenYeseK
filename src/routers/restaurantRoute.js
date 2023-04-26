@@ -8,7 +8,7 @@ const router = express.Router()
 
 router
     .route("/create")
-    .post(authMiddleware.checkUser, restaurantController.createRestaurant)
+    .post(restaurantController.createRestaurant)
 
 router
     .route("/")

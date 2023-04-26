@@ -34,11 +34,7 @@ const workingDaysSchema = new mongoose.Schema({
 
 
 const restaurantSchema = new mongoose.Schema({
-    createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-    },
+
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment",

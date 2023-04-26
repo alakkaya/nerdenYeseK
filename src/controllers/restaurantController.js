@@ -8,7 +8,6 @@ const createRestaurant = async (req, res) => {
         if (!existingRestaurant) {
             const restaurant = await Restaurant.create({
                 ...req.body,
-                createdBy: req.user.id
             });
 
             res.status(201).json({ success: true, restaurant });
