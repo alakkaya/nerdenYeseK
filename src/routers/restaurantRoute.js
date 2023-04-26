@@ -8,7 +8,7 @@ const router = express.Router()
 
 router
     .route("/create")
-    .post(authMiddleware.verifyAdmin, restaurantController.createRestaurant)
+    .post(restaurantController.createRestaurant)
 
 router
     .route("/")
@@ -17,8 +17,8 @@ router
 router
     .route("/:id")
     .get(restaurantController.getARestaurant)
-    .put(authMiddleware.verifyAdmin, restaurantController.updateRestaurant)
-    .delete(authMiddleware.verifyAdmin, restaurantController.deleteRestaurant)
+    .put(authMiddleware.checkUser, restaurantController.updateRestaurant)
+    .delete(authMiddleware.verifyUserOrAdmin, restaurantController.deleteRestaurant)
 
 router
     .route("/categoryByCount")

@@ -15,7 +15,7 @@ router
 
 router
     .route("/logout")
-    .get(authMiddleware.verifyAdmin, userController.logout)
+    .get(authMiddleware.verifyUserOrAdmin, userController.logout)
 
 router
     .route("/")
@@ -25,8 +25,8 @@ router
 router
     .route("/:id")
     .get(authMiddleware.verifyUserOrAdmin, userController.getAUser)
-    .delete(authMiddleware.checkUser, userController.deleteUser)
-    .put(authMiddleware.checkUser, userController.updateUser)
+    .delete(authMiddleware.verifyUserOrAdmin, userController.deleteUser)
+    .put(authMiddleware.verifyUserOrAdmin, userController.updateUser)
 
 
 
