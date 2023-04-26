@@ -15,7 +15,7 @@ router
     .delete(authMiddleware.verifyUserOrAdmin, commentController.deleteComment)
 router
     .route("/")
-    .get(authMiddleware.verifyAdmin, commentController.getAllComment)
+    .get(authMiddleware.verifyUserOrAdmin, commentController.getAllComment)
 router
     .route("/:restaurantId")
     .get(commentController.getCommentsForRestaurant)
@@ -33,5 +33,5 @@ router
 router
     .route("/:id/dislike")
     .put(authMiddleware.checkUser, commentController.dislikeComment)
-    
+
 export default router;
