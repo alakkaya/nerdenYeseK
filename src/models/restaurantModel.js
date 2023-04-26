@@ -37,7 +37,7 @@ const restaurantSchema = new mongoose.Schema({
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        // required: true,
+        required: true,
     },
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -65,7 +65,7 @@ const restaurantSchema = new mongoose.Schema({
     },
     category: {
         type: [String], //birden fazla olursa
-        enum: ["Pizza", "Kebap", "Lahmacun", "ÇiğKöfte", "Tatlı", "Hamburger", "Sushi"],
+        enum: ["Pizza", "Kebap", "Lahmacun", "Çiğ Köfte", "Tatlı", "Hamburger", "Sushi", "Döner"],
         required: true
     },
     photos: {
