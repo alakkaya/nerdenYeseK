@@ -8,7 +8,7 @@ const authenticateToken = async (req, res, next) => {
     if (!token) {
         res.status(401).json({
             success: false,
-            message: "Not authorized"
+            message: "Token not found"
         })
     }
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
@@ -31,7 +31,7 @@ const checkUser = async (req, res, next) => {
         } else {
             res.status(401).json({
                 success: false,
-                error: "Not authorized"
+                error: "Not Logged In"
             })
         }
     })
@@ -58,7 +58,7 @@ const verifyUserOrAdmin = async (req, res, next) => {
         } else {
             res.status(401).json({
                 success: false,
-                error: "Not authorized"
+                error: "You are not admin or logged in"
             })
         }
     })
