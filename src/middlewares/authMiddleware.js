@@ -6,7 +6,7 @@ const authenticateToken = async (req, res, next) => {
 
     const token = req.cookies.jwt
     if (!token) {
-        res.status(401).json({
+        return res.status(401).json({
             success: false,
             message: "Token not found"
         })
