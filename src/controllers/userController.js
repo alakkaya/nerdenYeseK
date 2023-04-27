@@ -43,11 +43,10 @@ const loginUser = async (req, res) => {
 
         if (same) {
             const token = createToken(user._id)
-            res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-            res.setHeader('Access-Control-Allow-Credentials', 'true');
+            
             res.cookie("jwt", token, {
                 httpOnly: true,
-                maxAge: 1000 * 60 * 60 * 24
+                maxAge: 1000 * 60 * 60 * 24,
             })
             res.status(200).json({
                 success: true,
