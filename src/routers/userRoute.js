@@ -21,6 +21,13 @@ router
     .route("/")
     .get(authMiddleware.verifyAdmin, userController.getAllUsers)
 
+router
+    .route("/forgot-password")
+    .put(userController.forgotPassword)
+
+router
+    .route("/reset-password")
+    .put(userController.resetPassword)
 
 router
     .route("/:id")

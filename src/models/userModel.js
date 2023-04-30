@@ -62,6 +62,10 @@ const userSchema = new mongoose.Schema({
     isAdmin: {
         type: Boolean,
         default: false
+    },
+    resetLink: {
+        data: String,
+        default: ''
     }
 }, { timestamps: true })
 
