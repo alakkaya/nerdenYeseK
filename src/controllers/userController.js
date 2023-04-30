@@ -239,9 +239,7 @@ const resetPassword = async (req, res) => {
                 const hashedPassword = await bcrypt.hash(newPass, 10);
 
                 // Update the user's password and resetLink
-                //user.password = hashedPassword;
-                //user.resetLink = "";
-                await user.updateOne({ password: hashedPassword });
+                await user.updateOne({ password: hashedPassword, resetLink: "" });
 
                 return res.status(200).json({ message: "Your password has been changed." })
             })
