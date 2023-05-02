@@ -5,7 +5,7 @@ const router = express.Router();
 
 router
     .route("/createComment/:restaurantId")
-    .post(authMiddleware.checkUser, commentController.createComment)
+    .post(commentController.createComment)
 router
     .route("/updateComment/:id/")
     .put(authMiddleware.checkUser, commentController.updateComment)
