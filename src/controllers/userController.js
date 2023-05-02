@@ -14,10 +14,12 @@ const createUser = async (req, res) => {
     try {
         const user = await User.findOne({ email })
         if (user) {
+            // res.redirect("/register") return res.redirect denince kodlar devam etmez
             return res.status(400).json({ success: false, message: "The email is already registered" })
         }
 
         const newUser = await User.create(req.body)
+        //res.redirect("/login")
         return res.status(201).json({ success: true, message: "User created...", newUser })
 
     } catch (error) {
@@ -35,6 +37,7 @@ const loginUser = async (req, res) => {
         const user = await User.findOne({ email })
 
         if (!user) {
+            //res.redirect("/login")
             return res.status(401).json({
                 success: false,
                 message: "There is no such user"
@@ -45,11 +48,10 @@ const loginUser = async (req, res) => {
 
         if (same) {
             const token = createToken(user._id)
-            res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-            res.setHeader('Access-Control-Allow-Credentials', 'true');
+
             res.cookie("jwt", token, {
                 httpOnly: true,
-                maxAge: 1000 * 60 * 60 * 24,
+                maxAge: 1000 * 60 * 60 * 24, //1 day
             })
             res.status(200).json({
                 success: true,
@@ -58,7 +60,8 @@ const loginUser = async (req, res) => {
                 id: user._id
             })
         } else {
-            console.log(`Password doesn't match: ${password} vs ${user.password}`)
+            //console.log(`Password doesn't match: ${password} vs ${user.password}`)
+            //res.redirect("/login")
             return res.status(401).json({
                 success: false,
                 message: "Passwords do not match"
