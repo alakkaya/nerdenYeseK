@@ -41,7 +41,7 @@ const createComment = async (req, res) => {
 
         await User.findByIdAndUpdate(
             userId,
-            { $push: { comment: comment._id } },
+            { $push: { comments: comment._id } },
             { new: true }
         );
 
@@ -104,6 +104,12 @@ const deleteComment = async (req, res) => {
             restaurantId,
             { $pull: { comments: commentId } }
         )
+        //new:true ?
+        await User.findByIdAndDelete(
+            userId,
+            { $pull: { comments: commentId } }
+        );
+
         res.status(201).json({ success: true, message: "The comment deleted succesfully." })
 
     } catch (error) {
@@ -134,6 +140,16 @@ const getAllComment = async (req, res) => {
 const getCommentsForRestaurant = async (req, res) => {
     try {
         const comment = await Comment.find({ restaurant: req.params.restaurantId })
+
+        res.status(200).json({ success: true, comment })
+    } catch (error) {
+        return res.status(500).json({ success: false, error })
+    }
+}
+
+const getCommentsForUser = async (req, res) => {
+    try {
+        const comment = await Comment.find({ createdBy: req.params.userId })
 
         res.status(200).json({ success: true, comment })
     } catch (error) {
@@ -257,6 +273,7 @@ export {
     getDetailComment,
     getAllComment,
     getCommentsForRestaurant,
+    getCommentsForUser,
     getCommentsWithImage,
     likeComment,
     dislikeComment,

@@ -20,6 +20,10 @@ router
     .route("/:restaurantId")
     .get(commentController.getCommentsForRestaurant)
 router
+    .route("/:userId")
+    .get(commentController.getCommentsForUser)
+
+router
     .route("/:id")
     .get(authMiddleware.verifyAdmin, commentController.getDetailComment)
 
