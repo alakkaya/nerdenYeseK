@@ -31,7 +31,7 @@ router
 
 router
     .route("/:id")
-    .get(authMiddleware.authenticateToken, userController.getAUser)
+    .get(userController.getAUser)
     .delete(authMiddleware.authenticateToken, userController.deleteUser)
     .put(authMiddleware.authenticateToken, userController.updateUser)
 
