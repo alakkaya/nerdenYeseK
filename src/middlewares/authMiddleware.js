@@ -7,10 +7,11 @@ const authenticateToken = async (req, res, next) => {
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(' ')[1]; //bearer kısmı ayırıp 2.kısmı alıyor.
 
-    if (!token) return res.status(401).json({ message: 'Token bulunamadı.' });
+    if (!token) return res.status(404).json({ message: 'Token bulunamadı.' });
 
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) {
+            console.log(err)
             return res.status(403).json({
                 success: false,
                 message: "Token geçersiz"

@@ -12,7 +12,7 @@ const createMenu = async (req, res, next) => {
         if (!restaurant) {
             return res
                 .status(403)
-                .json({ success: false, message: "Unauthorized to perform this action" });
+                .json({ success: false, message: "There is no such as restaurant" });
         }
 
         const menu = await Menu.create({

@@ -63,8 +63,11 @@ const restaurantSchema = new mongoose.Schema({
         enum: ["Pizza", "Kebap", "Lahmacun", "Çiğ Köfte", "Tatlı", "Hamburger", "Sushi", "Döner"],
         required: true
     },
-    photos: {
-        type: [String],
+    imageUrl: {
+        type: String
+    },
+    imageId: {
+        type: String
     },
     address: {
         type: String,

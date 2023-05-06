@@ -1,14 +1,36 @@
 import Restaurant from "../models/restaurantModel.js";
+import { v2 as cloudinary } from "cloudinary";
+import fs from "fs"
 
 const createRestaurant = async (req, res) => {
-    try {
-        const { name } = req.body;
-        const existingRestaurant = await Restaurant.findOne({ name });
+    const { name } = req.body;
+    const existingRestaurant = await Restaurant.findOne({ name });
 
+    let imageUrl = null;
+    let imageId = null;
+
+    if (req.files && req.files.image) {
+        const result = await cloudinary.uploader.upload(
+            req.files.image.tempFilePath,
+            {
+                use_filename: true,
+                folder: "restaurantPhotos"
+            })
+        imageUrl = result.secure_url;
+        imageId = result.public_id;
+    }
+
+    try {
         if (!existingRestaurant) {
             const restaurant = await Restaurant.create({
                 ...req.body,
+                imageUrl,
+                imageId,
             });
+
+            if (req.files && req.files.image) {
+                fs.unlinkSync(req.files.image.tempFilePath)
+            }
 
             res.status(201).json({ success: true, restaurant });
         } else {
