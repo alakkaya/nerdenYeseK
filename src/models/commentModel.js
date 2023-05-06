@@ -13,6 +13,22 @@ const commentSchema = new mongoose.Schema({
         ref: "Restaurant",
         required: true,
     },
+    createdByName: {
+        type: String,
+        required: true
+    },
+    createdBySurname: {
+        type: String,
+        required: true
+    },
+    createdByFollowers: {
+        type: Number,
+        //required: true
+    },
+    restaurantName: {
+        type: String,
+        required: true
+    },
     text: {
         type: String,
         required: true

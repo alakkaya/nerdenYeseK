@@ -17,14 +17,14 @@ router
     .route("/")
     .get(commentController.getAllComment)
 router
-    .route("/:restaurantId")
+    .route("/getCommentsForRestaurant/:restaurantId")
     .get(commentController.getCommentsForRestaurant)
 router
-    .route("/:userId")
+    .route("/getCommentsForUser/:userId")
     .get(commentController.getCommentsForUser)
 
 router
-    .route("/:id")
+    .route("/getDetailComment/:id")
     .get(authMiddleware.verifySiteAdmin, commentController.getDetailComment)
 
 router

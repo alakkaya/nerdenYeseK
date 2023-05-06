@@ -9,6 +9,9 @@ import fs from "fs"
 const createComment = async (req, res) => {
     const restaurantId = req.params.restaurantId
     const userId = req.body.userId;
+    const user = await User.findById(userId)
+    const restaurant = await Restaurant.findById(restaurantId)
+
     let imageUrl = null;
     let imageId = null;
 
@@ -31,6 +34,10 @@ const createComment = async (req, res) => {
             imageId,
             createdBy: userId,
             restaurant: restaurantId,
+            createdByName: user.name,
+            createdBySurname: user.surname,
+            //createdByFollowers: user.followers
+            restaurantName: restaurant.name
         })
 
         await Restaurant.findByIdAndUpdate(
