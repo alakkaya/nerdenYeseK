@@ -15,11 +15,11 @@ router
 
 router
     .route("/logout")
-    .get(authMiddleware.verifyUserOrAdmin, userController.logout)
+    .get(authMiddleware.authenticateToken, userController.logout)
 
 router
     .route("/")
-    .get(authMiddleware.verifyAdmin, userController.getAllUsers)
+    .get(authMiddleware.verifySiteAdmin, userController.getAllUsers)
 
 router
     .route("/forgot-password")
@@ -31,9 +31,9 @@ router
 
 router
     .route("/:id")
-    .get(authMiddleware.verifyUserOrAdmin, userController.getAUser)
-    .delete(authMiddleware.verifyUserOrAdmin, userController.deleteUser)
-    .put(authMiddleware.verifyUserOrAdmin, userController.updateUser)
+    .get(authMiddleware.authenticateToken, userController.getAUser)
+    .delete(authMiddleware.authenticateToken, userController.deleteUser)
+    .put(authMiddleware.authenticateToken, userController.updateUser)
 
 
 

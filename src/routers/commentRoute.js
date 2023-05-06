@@ -5,17 +5,17 @@ const router = express.Router();
 
 router
     .route("/createComment/:restaurantId")
-    .post(authMiddleware.checkUser, commentController.createComment)
+    .post(authMiddleware.authenticateToken, commentController.createComment)
 router
     .route("/updateComment/:id/")
-    .put(authMiddleware.checkUser, commentController.updateComment)
+    .put(authMiddleware.authenticateToken, commentController.updateComment)
 
 router
     .route("/deleteComment/:id/:restaurantId")
-    .delete(authMiddleware.verifyUserOrAdmin, commentController.deleteComment)
+    .delete(authMiddleware.authenticateToken, commentController.deleteComment)
 router
     .route("/")
-    .get(authMiddleware.verifyUserOrAdmin, commentController.getAllComment)
+    .get(commentController.getAllComment)
 router
     .route("/:restaurantId")
     .get(commentController.getCommentsForRestaurant)
@@ -25,17 +25,17 @@ router
 
 router
     .route("/:id")
-    .get(authMiddleware.verifyAdmin, commentController.getDetailComment)
+    .get(authMiddleware.verifySiteAdmin, commentController.getDetailComment)
 
 router
     .route("/getCommentsWithImage/:restaurantId")
-    .get(authMiddleware.verifyUserOrAdmin, commentController.getCommentsWithImage)
+    .get(commentController.getCommentsIncludeImage)
 
 router
     .route("/:id/like")
-    .put(authMiddleware.checkUser, commentController.likeComment)
+    .put(authMiddleware.authenticateToken, commentController.likeComment)
 router
     .route("/:id/dislike")
-    .put(authMiddleware.checkUser, commentController.dislikeComment)
+    .put(authMiddleware.authenticateToken, commentController.dislikeComment)
 
 export default router;

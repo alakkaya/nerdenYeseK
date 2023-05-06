@@ -17,8 +17,8 @@ router
 router
     .route("/:id")
     .get(restaurantController.getARestaurant)
-    .put(authMiddleware.checkUser, restaurantController.updateRestaurant)
-    .delete(authMiddleware.verifyUserOrAdmin, restaurantController.deleteRestaurant)
+    .put(authMiddleware.authenticateToken, restaurantController.updateRestaurant)
+    .delete(authMiddleware.authenticateToken, restaurantController.deleteRestaurant)
 
 router
     .route("/categoryByCount")

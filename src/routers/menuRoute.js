@@ -7,15 +7,15 @@ const router = express.Router({ mergeParams: true })
 
 router
     .route("/createMenu/:restaurantId")
-    .post(authMiddleware.verifyUserOrAdmin, menuController.createMenu)
+    .post(authMiddleware.verifyRestaurantAdmin, menuController.createMenu)
 
 router
     .route("/updateMenu/:id/:restaurantId")
-    .put(authMiddleware.verifyUserOrAdmin, menuController.updateMenu)
+    .put(authMiddleware.verifyRestaurantAdmin, menuController.updateMenu)
 
 router
     .route("/deleteMenu/:id/:restaurantId")
-    .delete(authMiddleware.verifyUserOrAdmin, menuController.deleteMenu)
+    .delete(authMiddleware.verifyRestaurantAdmin, menuController.deleteMenu)
 
 router
     .route("/")

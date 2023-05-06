@@ -157,7 +157,7 @@ const getCommentsForUser = async (req, res) => {
     }
 }
 
-const getCommentsWithImage = async (req, res) => {
+const getCommentsIncludeImage = async (req, res) => {
     const restaurantId = req.params.restaurantId;
     const restaurantObjectId = mongoose.Types.ObjectId(restaurantId);
     try {
@@ -274,7 +274,7 @@ export {
     getAllComment,
     getCommentsForRestaurant,
     getCommentsForUser,
-    getCommentsWithImage,
+    getCommentsIncludeImage,
     likeComment,
     dislikeComment,
 

@@ -72,12 +72,11 @@ const updateRestaurant = async (req, res) => {
                 message: "The restaurant was not found"
             })
         }
-        if (restaurant.createdBy.toString() !== req.user.id) {
+        if (restaurant.createdBy.toString() !== req.user.id || !req.user.isRestaurantAdmin) {
             return res.status(403).json({
                 success: false,
-                message: "You are not authorized to update this restaurant"
+                message: "You are not authorized to delete this restaurant"
             })
-
         }
         const updatedRestaurant = await Restaurant.findOneAndUpdate({ _id: restaurantId }, { $set: req.body }, { new: true })
         return res.status(200).json({
@@ -104,7 +103,7 @@ const deleteRestaurant = async (req, res) => {
                 message: "The restaurant was not found"
             })
         }
-        if (restaurant.createdBy.toString() !== req.user.id) {
+        if (restaurant.createdBy.toString() !== req.user.id || !req.user.isRestaurantAdmin) {
             return res.status(403).json({
                 success: false,
                 message: "You are not authorized to delete this restaurant"

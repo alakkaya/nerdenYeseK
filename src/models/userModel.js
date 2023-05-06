@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment",
     }],
+
     name: {
         type: String,
         required: true,
@@ -59,7 +60,11 @@ const userSchema = new mongoose.Schema({
     favoriteFood: {
         type: [String],
     },
-    isAdmin: {
+    isRestaurantAdmin: {
+        type: Boolean,
+        default: false
+    },
+    isSiteAdmin: {
         type: Boolean,
         default: false
     },

@@ -1,19 +1,17 @@
 import jwt from "jsonwebtoken"
 
 
-//verify Token
+//kullanıcının login olduğunu kontrol etmek için,checkUser
 const authenticateToken = async (req, res, next) => {
 
-    const token = req.cookies.jwt
-    if (!token) {
-        return res.status(401).json({
-            success: false,
-            message: "Token not found"
-        })
-    }
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1]; //bearer kısmı ayırıp 2.kısmı alıyor.
+
+    if (!token) return res.status(401).json({ message: 'Token bulunamadı.' });
+
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) {
-            res.status(401).json({
+            return res.status(403).json({
                 success: false,
                 message: "Token geçersiz"
             })
@@ -24,51 +22,39 @@ const authenticateToken = async (req, res, next) => {
 }
 
 
-const checkUser = async (req, res, next) => {
-    authenticateToken(req, res, () => {
-        if (req.user.id) {
-            next()
-        } else {
-            res.status(401).json({
-                success: false,
-                error: "Not Logged In"
-            })
-        }
-    })
-}
 
-
-const verifyAdmin = async (req, res, next) => {
+const verifyRestaurantAdmin = async (req, res, next) => {
     authenticateToken(req, res, next, () => {
-        if (req.user.isAdmin) {
+        if (req.user.isRestaurantAdmin) {
             next()
         } else {
             return res.status(401).json({
                 success: false,
-                error: "You are not admin"
+                error: "You are not admin for this restaurant"
             })
         }
     })
 }
 
-const verifyUserOrAdmin = async (req, res, next) => {
+const verifySiteAdmin = async (req, res, next) => {
     authenticateToken(req, res, next, () => {
-        if (req.user.id === req.params.id || req.user.isAdmin) {
+        if (req.user.isSiteAdmin) {
             next()
         } else {
-            res.status(401).json({
+            return res.status(401).json({
                 success: false,
-                error: "You are not admin or logged in"
+                error: "You are not admin for the site"
             })
         }
     })
 }
+
+
 
 
 
 export {
     authenticateToken,
-    checkUser,
-    verifyAdmin,
-    verifyUserOrAdmin
+    verifySiteAdmin,
+    verifyRestaurantAdmin,
 }

@@ -3,12 +3,10 @@ import Menu from "../models/menuModel.js"
 
 const createMenu = async (req, res, next) => {
     const restaurantId = req.params.restaurantId
-    const userId = req.user.id;
 
     try {
         const restaurant = await Restaurant.findOne({
-            _id: restaurantId,
-            createdBy: userId
+            _id: restaurantId
         });
 
         if (!restaurant) {
@@ -37,13 +35,12 @@ const createMenu = async (req, res, next) => {
 const updateMenu = async (req, res, next) => {
     const menuId = req.params.id;
     const restaurantId = req.params.restaurantId;
-    const userId = req.user.id; // get the user ID from the authentication middleware
+
 
     try {
         // check if the user is the owner of the restaurant
         const restaurant = await Restaurant.findOne({
-            _id: restaurantId,
-            createdBy: userId
+            _id: restaurantId
         });
 
         if (!restaurant) {
