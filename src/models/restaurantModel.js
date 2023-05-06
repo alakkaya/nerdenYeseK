@@ -1,4 +1,8 @@
 import mongoose from "mongoose";
+import moment from 'moment';
+import 'moment/locale/tr.js';
+moment.locale('tr');
+
 
 const workingDaysSchema = new mongoose.Schema({
     day: {
@@ -10,28 +14,19 @@ const workingDaysSchema = new mongoose.Schema({
         type: Boolean,
         // required: true
     },
-    openTime: {
-        type: String,
-        validate: {
-            validator: function (v) {
-                // Check if openTime is in the format HH:MM
-                return /^\d{2}:\d{2}$/.test(v);
-            },
-            message: props => `${props.value} is not a valid open time. Must be in the format HH:MM`
-        }
-    },
-    closeTime: {
-        type: String,
-        validate: {
-            validator: function (v) {
-                // Check if closeTime is in the format HH:MM
-                return /^\d{2}:\d{2}$/.test(v);
-            },
-            message: props => `${props.value} is not a valid close time. Must be in the format HH:MM`
-        }
-    }
+    openTime: String,
+    closeTime: String,
 });
 
+// Define a custom validator for workingDaysSchema
+workingDaysSchema.path('isOpen').validate(function (value) {
+    if (value) {
+        return /^\d{2}:\d{2}$/.test(this.openTime) &&
+            /^\d{2}:\d{2}$/.test(this.closeTime);
+    } else {
+        return !this.openTime && !this.closeTime;
+    }
+}, 'Invalid working day');
 
 const restaurantSchema = new mongoose.Schema({
 
