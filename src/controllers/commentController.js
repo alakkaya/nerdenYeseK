@@ -8,7 +8,7 @@ import fs from "fs"
 // siye yöneci ve rest sahibi içn ayrı ayrı  kaç kişi ziyaret topla kullanıcı ,,, son 30 gün istatistikler ,,, şifre resetleme endpointi falan oluştur.
 const createComment = async (req, res) => {
     const restaurantId = req.params.restaurantId
-    const userId = req.user.id;
+    const userId = req.body.userId;
     let imageUrl = null;
     let imageId = null;
 
