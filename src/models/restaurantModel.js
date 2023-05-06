@@ -42,6 +42,10 @@ const restaurantSchema = new mongoose.Schema({
         type: String,
         required: true //filtreyi buradan yararlanarak yaparız.
     },
+    township: { //ilçe
+        type: String,
+        required: true
+    },
     name: {
         type: String,
         required: true,
