@@ -172,6 +172,21 @@ const categoryByCount = async (req, res) => {
         })
     }
 }
+
+const addFavoriteThisRestaurant = async (req, res) => {
+    const userId = req.user.id;
+
+    try {
+
+    } catch (error) {
+        return res.status(500).json({ success: false, error })
+    }
+
+
+}
+
+
+
 //şu şehirdeki bu kategorideki restaurantlar
 const categoryByCity = async (req, res) => {
     try {
@@ -199,6 +214,7 @@ export {
     getARestaurant,
     updateRestaurant,
     deleteRestaurant,
+    addFavoriteThisRestaurant,
     categoryByCount,
     categoryByCity
 }
