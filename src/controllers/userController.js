@@ -200,7 +200,7 @@ const forgotPassword = async (req, res) => {
             subject: "Password Reset Link",
             html: `
                 <h2> Please click on given link to reset your password </h2>
-                <p>http://localhost:5000/resetpassword/${token}</p>
+                <p>http://localhost:3000/resetPassword/${token}</p>
             `
         }
 
@@ -225,7 +225,9 @@ const forgotPassword = async (req, res) => {
 
 
 const resetPassword = async (req, res) => {
-    const { resetLink, newPass } = req.body;
+    const { newPass } = req.body;
+    const { resetLink } = req.params;
+
     if (resetLink) {
         jwt.verify(resetLink, process.env.RESET_PASSWORD_KEY, function (error, decodedData) {
             if (error) {

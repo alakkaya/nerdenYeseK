@@ -172,7 +172,7 @@ const categoryByCount = async (req, res) => {
         })
     }
 }
-
+//eklenecek
 const addFavoriteThisRestaurant = async (req, res) => {
     const userId = req.user.id;
 
