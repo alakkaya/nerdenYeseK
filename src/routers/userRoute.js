@@ -26,7 +26,7 @@ router
     .put(userController.forgotPassword)
 
 router
-    .route("/reset-password")
+    .route("/reset-password/:resetLink")
     .put(userController.resetPassword)
 
 router
