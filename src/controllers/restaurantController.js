@@ -208,17 +208,31 @@ const categoryByCity = async (req, res) => {
     }
 }
 
+//Implement Search, Sort, Filter and Pagination
+/* note for frontend:
+/restaurants?keyword=pizza&sort=rating&order=desc
+-------------------------------------------------------------
+"pizza" kelimesini arayacak ve sonuçları "rating" özelliğine göre sıralayacaktır. order parametresi ile sıralama sırasını belirleyebilirsiniz (örneğin, "asc" veya "desc"). Sıralama sırası belirtilmezse, varsayılan olarak "asc" kullanılır.
+*/
+
+
 const searchRestaurants = async (req, res) => {
-    const { keyword } = req.query;
+    const { keyword, sort, filter, order } = req.query;
     try {
         const regex = new RegExp(keyword, "i");
+        const filterObj = filter ? JSON.parse(filter) : {};
+        const sortObj = {};
+        sortObj[sort] = order == "desc" ? -1 : 1;
+
         const restaurants = await Restaurant.find({
+            ...filterObj,
             $or: [
                 { name: { $regex: regex } },
                 { category: { $regex: regex } },
                 //if not older verison mongodb { name: { $regex: keyword, $options: "i" } },
             ],
         })
+            .sort(sortObj);
 
         res.status(200).json({
             success: true,
