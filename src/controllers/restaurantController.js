@@ -208,6 +208,32 @@ const categoryByCity = async (req, res) => {
     }
 }
 
+const searchRestaurants = async (req, res) => {
+    const { keyword } = req.query;
+    try {
+        const regex = new RegExp(keyword, "i");
+        const restaurants = await Restaurant.find({
+            $or: [
+                { name: { $regex: regex } },
+                { category: { $regex: regex } },
+                //if not older verison mongodb { name: { $regex: keyword, $options: "i" } },
+            ],
+        })
+
+        res.status(200).json({
+            success: true,
+            length: restaurants.length,
+            restaurants
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ success: false, error })
+    }
+}
+
+
+
 export {
     createRestaurant,
     getAllRestaurants,
@@ -216,5 +242,6 @@ export {
     deleteRestaurant,
     addFavoriteThisRestaurant,
     categoryByCount,
-    categoryByCity
+    categoryByCity,
+    searchRestaurants
 }

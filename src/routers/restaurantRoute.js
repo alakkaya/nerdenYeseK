@@ -15,6 +15,10 @@ router
     .get(restaurantController.getAllRestaurants)
 
 router
+    .route("/search")
+    .get(restaurantController.searchRestaurants)
+//for frontend => http://localhost:5000/restaurants/search?keyword=kebap 
+router
     .route("/:id")
     .get(restaurantController.getARestaurant)
     .put(authMiddleware.authenticateToken, restaurantController.updateRestaurant)
