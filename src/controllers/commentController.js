@@ -52,6 +52,9 @@ const createComment = async (req, res) => {
             { new: true }
         );
 
+        //Update restaurant rating
+        await restaurant.updateRating();
+
         if (req.files && req.files.image) {
             fs.unlinkSync(req.files.image.tempFilePath)
         }

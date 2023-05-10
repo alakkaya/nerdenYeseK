@@ -118,7 +118,19 @@ const restaurantSchema = new mongoose.Schema({
 
 
 
-}, { timestamps: true })
+}, { timestamps: true });
+
+
+restaurantSchema.methods.updateRating = async function () {
+    const comments = await Comment.find({ restaurant: this._id });
+    const numComments = comments.length;
+    const totalStars = comments.reduce((total, comment) => total + comment.starForRestaurant, 0)
+    const newRating = numComments > 0 ? totalStars / numComments : 0;
+    this.rating = newRating;
+    await this.save();
+};
+
+
 
 const Restaurant = mongoose.model("Restaurant", restaurantSchema)
 
