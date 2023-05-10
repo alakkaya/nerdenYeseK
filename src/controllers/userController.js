@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import mailgun from 'mailgun-js'
+import Restaurant from "../models/restaurantModel.js";
 
 dotenv.config();
 
@@ -253,6 +254,32 @@ const resetPassword = async (req, res) => {
         return res.status(401).json({ error: "User doesn't have resetLink" })
     }
 }
+
+//favoriye eklemek ve kaldırmak için  kullanılır.
+const addFavoriteRestaurant = async (req, res) => {
+    const userId = req.user.id;
+    const { restaurantId } = req.params;
+
+    try {
+        const user = await User.findById(userId);
+
+        if (user.favoriteRestaurants.includes(restaurantId)) {
+            user.favoriteRestaurants.pull(restaurantId);
+        } else {
+            user.favoriteRestaurants.push(restaurantId);
+        }
+
+        await user.save();
+
+        return res.status(200).json({ success: true, message: "Favorite restaurants updated succesfully.", user })
+    } catch (error) {
+        return res.status(500).json({ success: false, error })
+    }
+}
+
+
+
+
 export {
     createUser,
     loginUser,
@@ -262,5 +289,6 @@ export {
     updateUser,
     logout,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    addFavoriteRestaurant,
 }

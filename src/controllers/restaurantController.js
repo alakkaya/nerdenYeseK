@@ -172,20 +172,6 @@ const categoryByCount = async (req, res) => {
         })
     }
 }
-//eklenecek
-const addFavoriteThisRestaurant = async (req, res) => {
-    const userId = req.user.id;
-
-    try {
-
-    } catch (error) {
-        return res.status(500).json({ success: false, error })
-    }
-
-
-}
-
-
 
 //şu şehirdeki bu kategorideki restaurantlar
 const categoryByCity = async (req, res) => {
@@ -208,7 +194,7 @@ const categoryByCity = async (req, res) => {
     }
 }
 
-//Implement Search, Sort, Filter and Pagination
+//Implement Search, Sort, Filter and Pagination(not added)
 /* note for frontend:
 /restaurants?keyword=pizza&sort=rating&order=desc
 -------------------------------------------------------------
@@ -254,7 +240,6 @@ export {
     getARestaurant,
     updateRestaurant,
     deleteRestaurant,
-    addFavoriteThisRestaurant,
     categoryByCount,
     categoryByCity,
     searchRestaurants

@@ -15,7 +15,10 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment",
     }],
-
+    favoriteRestaurants: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Restaurant"
+    }],
     name: {
         type: String,
         required: true,

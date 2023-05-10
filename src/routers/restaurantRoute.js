@@ -24,9 +24,6 @@ router
     .put(authMiddleware.authenticateToken, restaurantController.updateRestaurant)
     .delete(authMiddleware.authenticateToken, restaurantController.deleteRestaurant)
 
-router
-    .route("/:id/addFavorite")
-    .put(authMiddleware.authenticateToken, restaurantController.addFavoriteThisRestaurant)
 
 router
     .route("/categoryByCount")

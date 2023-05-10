@@ -8,7 +8,6 @@ router
     .route("/register")
     .post(userController.createUser)
 
-
 router
     .route("/login")
     .post(userController.loginUser)
@@ -34,6 +33,10 @@ router
     .get(userController.getAUser)
     .delete(authMiddleware.authenticateToken, userController.deleteUser)
     .put(authMiddleware.authenticateToken, userController.updateUser)
+
+router
+    .route("/addFavoriteRestaurant/:restaurantId/")
+    .put(userController.addFavoriteRestaurant)
 
 
 
