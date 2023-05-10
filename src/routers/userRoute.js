@@ -36,7 +36,7 @@ router
 
 router
     .route("/addFavoriteRestaurant/:restaurantId/")
-    .put(userController.addFavoriteRestaurant)
+    .put(authMiddleware.authenticateToken, userController.addFavoriteRestaurant)
 
 
 
