@@ -1,3 +1,4 @@
+import Comment from "./commentModel.js";
 import mongoose from "mongoose";
 import moment from 'moment';
 import 'moment/locale/tr.js';
