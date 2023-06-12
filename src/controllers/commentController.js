@@ -95,7 +95,7 @@ const updateComment = async (req, res) => {
     }
 }
 
-const deleteComment = async (req, res) => { // yorumu sildikten sonra kullanıcı ortadan kayboluyor 
+const deleteComment = async (req, res) => {
     const commentId = req.params.id
     const restaurantId = req.params.restaurantId;
     const userId = req.user.id;
@@ -117,7 +117,7 @@ const deleteComment = async (req, res) => { // yorumu sildikten sonra kullanıc�
             { $pull: { comments: commentId } }
         )
         //new:true ?
-        await User.findByIdAndDelete(
+        await User.findByIdAndUpdate(
             userId,
             { $pull: { comments: commentId } }
         );
