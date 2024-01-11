@@ -63,7 +63,6 @@ const createComment = async (req, res) => {
         res.status(201).json({ success: true, data: comment })
 
     } catch (error) {
-        console.log(error);
         return res.status(500).json({ success: false, error })
     }
 }
@@ -116,7 +115,6 @@ const deleteComment = async (req, res) => {
             restaurantId,
             { $pull: { comments: commentId } }
         )
-        //new:true ?
         await User.findByIdAndUpdate(
             userId,
             { $pull: { comments: commentId } }
